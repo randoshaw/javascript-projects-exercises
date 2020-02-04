@@ -28,3 +28,4 @@ for (let color of colors) {
 	container.appendChild(box)
 	box.addEventListener('click', changeColor)
 }
+
