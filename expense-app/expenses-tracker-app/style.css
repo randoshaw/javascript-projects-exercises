@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: lightsteelblue;
+  background-color: rgb(231, 231, 231);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,17 +27,20 @@ body {
 h1 {
   letter-spacing: 1px;
   margin: 0;
+  text-align: center;
 }
 
 h3 {
   border-bottom: 1px solid #7c7a7a;
   padding-bottom: 10px;
   margin: 40px 0 10px;
+  text-align: center;
 }
 
 h4 {
   margin: 0;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .inc-exp-container {
@@ -76,7 +79,105 @@ h4 {
 label {
   display: inline-block;
   margin: 10px;
-  background-color: gray;
+  /* background-color: gray; */
+}
+
+
+input[type='text'], input[type='number'] {
+  border: 1px  solid whitesmoke;
+  border-radius: 2px;
+  display: block;
+  font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+
+.btn {
+  cursor: pointer;
+  background-color: #b98eff;
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 30px;
+  display: block;
+  border: 0;
+  color: #f4f4f4;
+  font-size: 16px;
+}
+
+.btn:focus, .delete-btn:focus {
+  outline: 0;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+.list li {
+  background-color: #fff;
+  box-shadow: var(--box-shadow);
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.list li.plus {
+  border-right: 5px solid #2ecc71;
+}
+
+.list li.minus {
+  border-right: 5px solid #c0392b;
+}
+
+/* .list {
+  list-style: none;
+  margin-bottom: 40px;
+  padding: 0;
+}
+
+.list li {
+  color: #333;
+  background-color: #fff;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.list li.plus {
+  border-right: 5px solid limegreen;
+}
+
+.list li.minus {
+  border-right: 5px solid firebrick;
+} */
+
+.delete-btn {
+  cursor: pointer;
+  background-color: rgb(255, 56, 56);
+  color: #fff;
+  font-size: 20px;
+  line-height: 18px;
+  padding: 2px 7px;
+  border: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-115%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.list li:hover .delete-btn {
+  opacity: 1;
 }
 
 
