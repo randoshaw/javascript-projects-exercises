@@ -6,16 +6,59 @@ const form = document.querySelector('#form')
 const text = document.querySelector('#text')
 const amount = document.querySelector('#amount')
 
-const dummyTransactions = [
-	{ id: 1, text: 'Case', amount: -20 },
-	{ id: 2, text: 'Payday', amount: 300 },
-	{ id: 3, text: 'Gas', amount: -10 },
-	{ id: 4, text: 'Photo Shoot', amount: 150 }
-]
+// const dummyTransactions = [
+// 	{ id: 1, text: 'Case', amount: -20 },
+// 	{ id: 2, text: 'Payday', amount: 300 },
+// 	{ id: 3, text: 'Gas', amount: -10 },
+// 	{ id: 4, text: 'Photo Shoot', amount: 150 }
+// ]
 
-let transactions = dummyTransactions
+// It will come out as a string. JSON.parse turns it into an arary
+const localStorageTransactions = JSON.parse(
+	localStorage.getItem('transactions')
+)
+
+let transactions =
+	localStorage.getItem('transactions') !== null ? localStorageTransactions : []
+
+// Add transaction
+function addTransaction(e) {
+	e.preventDefault()
+
+	// trim() removes whitespace from both sides of a string
+	if (text.value.trim() === '' || amount.value.trim() === '') {
+		alert('Please enter a Text and Amount')
+	} else {
+		const transaction = {
+			id: generateID(),
+			text: text.value,
+			amount: +amount.value // the '+' converts string into integer
+		}
+
+		// console.log(transaction)
+
+		// Push to end of array
+		transactions.push(transaction)
+		// Add it to the DOM
+		addTransactionDOM(transaction)
+		// Update thevalues
+		updateValues()
+
+		updateLocalStorage()
+
+		// Clear the values
+		text.value = ''
+		amount.value = ''
+	}
+}
+
+// Generate random ID
+function generateID() {
+	return Math.floor(Math.random() * 100000000)
+}
 
 // Add transactions to DOM list
+
 function addTransactionDOM(transaction) {
 	// get income or expense
 	const sign = transaction.amount < 0 ? '-' : '+'
@@ -29,7 +72,9 @@ function addTransactionDOM(transaction) {
 	item.innerHTML = `
   ${transaction.text} <span>${sign}${Math.abs(
 		transaction.amount
-	)}</span> <button class="delete-btn">x</button>
+	)}</span> <button" class="delete-btn" onclick="removeTransaction(${
+		transaction.id
+	})">x</button">
   `
 
 	list.appendChild(item)
@@ -60,6 +105,20 @@ function updateValues() {
 	moneyMinus.innerText = `$${expense}`
 }
 
+// Reomove transaciton by ID
+function removeTransaction(id) {
+	transactions = transactions.filter(transaction => transaction.id !== id)
+
+	updateLocalStorage()
+
+	init()
+}
+
+// Update local storage transactions
+function updateLocalStorage() {
+	localStorage.setItem('transactions', JSON.stringify(transactions))
+}
+
 // Initial app
 function init() {
 	list.innerHTML = ''
@@ -69,3 +128,5 @@ function init() {
 }
 
 init()
+
+form.addEventListener('submit', addTransaction)
